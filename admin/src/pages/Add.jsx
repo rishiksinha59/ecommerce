@@ -60,7 +60,7 @@ const Add = ({token}) => {
   return (
     <form onSubmit={onSubmitHandler} className='flex flex-col w-full items-start gap-3'>
         <div>
-            <p className='mb-2'>Upload Image</p>
+            <p className='mb-2 text-orange-500'>Upload Image</p>
             <div className='flex gap-2'>
                 <label htmlFor="image1">
                     <img className='w-20' src={!image1 ? assets.upload_area : URL.createObjectURL(image1)} alt="" />
@@ -134,7 +134,7 @@ const Add = ({token}) => {
             <input onChange={()=>setBestSeller(prev => !prev)} checked={bestseller} type="checkbox" id='bestseller' />
             <label className='cursor-pointer' htmlFor="bestseller">Add to bestseller</label>
         </div>
-        <button type='submit' className='w-28 py-3 mt-4 bg-black text-white'>ADD</button>
+        <button type='submit' className='w-28 py-3 mt-4 bg-black text-white hover:opacity-80'>ADD</button>
     </form>
   )
 }

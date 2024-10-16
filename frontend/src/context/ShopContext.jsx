@@ -2,6 +2,9 @@ import { createContext, useEffect, useState } from "react";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+// import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+// import { auth } from "../firebase/firebaseConfig";
+
 
 export const ShopContext = createContext();
 
@@ -15,7 +18,20 @@ const ShopContextProvider = (props) => {
     const [products, setProducts] = useState([]);
     const [token, setToken] = useState('');
     const [profilePicture, setProfilePicture] = useState('');
+    const [user, setUser] = useState(null);
     const navigate = useNavigate();
+    
+    const handleGoogle = async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+          const result = await signInWithPopup(auth, provider);
+          const user = result.user;
+          setUser(user);
+          toast.success("Logged in successfully!");
+        } catch (error) {
+          toast.error("Login failed. Please try again.");
+        }
+      };
     
 
     const saveCartToLocalStorage = (cartData) => {
@@ -161,7 +177,7 @@ const ShopContextProvider = (props) => {
         products, currency, delivery_fee,
         search, setSearch, showSearch, setShowSearch,
         cartItems, addToCart, getCartCount, updateQuantity, getCartAmount, navigate, backendUrl, setToken, token, setCartItems,
-        profilePicture, setProfilePicture,
+        profilePicture, setProfilePicture, handleGoogle, user
         
     };
 

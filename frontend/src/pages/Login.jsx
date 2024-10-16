@@ -6,7 +6,7 @@ import { assets } from '../assets/assets';
 
 const Login = () => {
   const [currentState, setCurrentState] = useState('Login');
-  const { token, setToken, navigate, backendUrl, setProfilePicture, profilePicture } = useContext(ShopContext);
+  const { token, setToken, navigate, backendUrl, handleGoogle, user  } = useContext(ShopContext);
 
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -89,7 +89,7 @@ const Login = () => {
       <button className='bg-[green] hover:bg-orange-500 duration-150 w-full text-white font-light px-8 py-2 mt-4'>{currentState === 'Login' ? 'Sign In' : 'Sign Up'}</button>
     </form>
 
-    <div className='border flex items-center gap-5 w-[90%] sm:max-w-96 mx-auto mt-8 bg-blue-500 hover:bg-blue-400 text-white cursor-pointer'><img src={assets.google_logo} className='w-10' alt="" /> Google Sign In</div>
+    <div onClick={handleGoogle} className='border flex items-center gap-5 w-[90%] sm:max-w-96 mx-auto mt-8 bg-blue-500 hover:bg-blue-400 text-white cursor-pointer'><img src={assets.google_logo} className='w-10' alt="" /> Google Sign In</div>
     </>
   );
 };

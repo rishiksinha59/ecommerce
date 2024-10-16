@@ -58,6 +58,31 @@ const sortProduct=()=>{
   }
 }
 
+// Pagination control
+const itemsPerPage=12
+const [currentPage,setCurrentPage] = useState(1)
+const lastIndex = currentPage*itemsPerPage
+const firstIndex = lastIndex - itemsPerPage
+const currentItems = filterProducts.slice(firstIndex,lastIndex)
+const totalPages = Math.ceil(filterProducts.length/itemsPerPage)
+const pageNumbers = Array.from({length: totalPages}, (_,index)=>index+1)
+
+const handlePageClick=(pageNumber)=>{
+  setCurrentPage(pageNumber)
+}
+const handlePrevPage=()=>{
+  if(currentPage>1){
+    setCurrentPage(prev=>prev-1)
+  }
+}
+const handleNextPage=()=>{
+  if(currentPage<totalPages){
+    setCurrentPage(prev=>prev+1)
+  }
+}
+
+
+
   useEffect(()=>{
     setFilterProducts(products)
   },[])
@@ -129,9 +154,27 @@ const sortProduct=()=>{
         </div>
         {/* Map products */}
         <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6'>
-            {filterProducts.map((item,index)=>(
+            {currentItems.map((item,index)=>(
               <ProductItem key={index} id={item._id} price={item.price} name={item.name} image={item.image}/>
             ))}
+        </div>
+        {/* Pagination controls */}
+        <div className='w-fit border mx-auto mt-7'>
+          <button onClick={handlePrevPage}
+          disabled={currentPage===1}
+          className='px-4 py-2 border mx-auto border-gray-500  disabled:opacity-50'
+          >Prev</button>
+          <button>
+            {pageNumbers.map((page)=>(
+              <button key={page} onClick={()=>handlePageClick(page)}
+               className={`px-4 py-2 border border-gray-500 ${currentPage===page ? 'bg-[green]':''}`}
+               >{page}</button>
+            ))}
+          </button>
+          <button onClick={handleNextPage}
+          disabled={currentPage===totalPages}
+          className='px-4 py-2 border border-gray-500  disabled:opacity-50'
+          >Next</button>
         </div>
       </div>
     </div>

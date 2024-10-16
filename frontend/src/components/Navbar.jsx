@@ -4,11 +4,11 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
-  const {profilePicture, showSearch, setShowSearch, getCartCount, navigate, token, setToken, setCartItems } = useContext(ShopContext);
+  const { showSearch, setShowSearch, getCartCount, navigate, token, setToken, setCartItems, handleGoogle, user } = useContext(ShopContext);
   const logout = () => {
     navigate("/login");
     localStorage.removeItem("token");
-    localStorage.removeItem("profilePicture");
+    
     setToken("");
     setCartItems({});
   };
@@ -41,7 +41,7 @@ const Navbar = () => {
        
         <div className="group relative">
           
-            <img onClick={()=>token ? null : navigate('/login')} src={profilePicture || assets.profile_icon} className="w-5 h-5 rounded-full cursor-pointer" alt="Profile" />
+            <img onClick={()=>token ? null : navigate('/login')} src={ user ? user.photoURL : assets.profile_icon} className="w-5 h-5 rounded-full cursor-pointer" alt="Profile" />
         {/* Dropdown menu */}
         {token &&  <div className="group-hover:block hidden absolute dropdown-menu right-0 pt-4">
          
