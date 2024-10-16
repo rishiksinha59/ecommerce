@@ -121,7 +121,7 @@ const sortProduct=()=>{
         <div className='flex justify-between text-base sm:text-2xl mb-4'>
             <Title text1={'ALL'} text2={'COLLECTIONS'}/>
             {/* Product Sort */}
-            <select onChange={(e)=>setSortType(e.target.value)}  className='border-2 border-gray-300 text-sm px-2'>
+            <select onChange={(e)=>setSortType(e.target.value)}  className='border-2 cursor-pointer border-gray-300 text-sm px-2'>
               <option value="relevance">Sort by: Relevance</option>
               <option value="low-high">Sort by: Low to High</option>
               <option value="high-low">Sort by: High to Low</option>

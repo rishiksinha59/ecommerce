@@ -4,11 +4,12 @@ import Title from '../components/Title';
 import ProductItem from '../components/ProductItem';
 import { assets } from '../assets/assets';
 import CartTotal from '../components/CartTotal';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
   const {products,currency, cartItems, updateQuantity, navigate} = useContext(ShopContext);
   const [cartData, setCartData] = useState([]);
-
+  const [emptyCartImg,setEmptyCartImg] = useState(false)
  
 
   useEffect(()=>{
@@ -26,9 +27,19 @@ const Cart = () => {
       }
     }
     setCartData(tempData)
+   
   }
   },[cartItems,products])
-  return (
+
+  useEffect(()=>{
+    if(cartData.length===0){
+      setEmptyCartImg(true)
+    }else{
+      setEmptyCartImg(false)
+    }
+  },[cartData])
+
+  return products.length>0 && !emptyCartImg ? (
     <div className='border-t pt-14'>
       <div className='text-2xl mb-3'>
         <Title text1={'YOUR'} text2={'CART'}/>
@@ -65,7 +76,19 @@ const Cart = () => {
         </div>
       </div>
     </div>
-  )
+  ) : 
+  <div className='h-screen '>
+    <div className='w-1/4 mx-auto mt-10 flex flex-col'>
+    <img src={assets.empty_cart} alt="" />
+      <h1 className='text-center leading-10'>Hey, your cart feels so light!</h1>
+      <h1 className='text-center'>Let&apos;s add some items in your cart</h1>
+      <Link to='/' className='bg-[orange] hover:bg-[green] duration-150 p-4 mt-5'>
+      <p className='text-center'>Start Shopping</p>
+      </Link>
+      
+    </div>
+    
+  </div>
 }
 
 export default Cart

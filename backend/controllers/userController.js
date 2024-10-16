@@ -18,7 +18,7 @@ const loginUser = async(req,res)=>{
         const isMatch = await bcrypt.compare(password,user.password);
         if(isMatch){
             const token = createToken(user._id)
-             res.json({success:true,token})
+            res.json({ success: true, token, profilePicture: user.profilePicture });
         }else{
              res.json({success:false, message:'Invalid credentials'})
         }
@@ -33,7 +33,7 @@ const loginUser = async(req,res)=>{
 const registerUser = async(req,res)=>{
     // res.json({message: "Register API is running"})
     try{
-        const {name,email,password} = req.body
+        const {name,email,password, profilePicture} = req.body
         // checking user already exists or not
         const exists = await userModel.findOne({email})
         if(exists){
@@ -52,11 +52,12 @@ const registerUser = async(req,res)=>{
         const newUser = new userModel({
             name,
             email,
-            password:hashedPassword
+            password:hashedPassword,
+            profilePicture: profilePicture || '',
         })
         const user = await newUser.save()
         const token = createToken(user._id)
-        res.json({success:true,token})
+        res.json({ success: true, token, profilePicture: user.profilePicture });
     }catch(error){
         console.log(error);
         res.json({success:false, message: error.message})

@@ -14,7 +14,9 @@ const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
     const [products, setProducts] = useState([]);
     const [token, setToken] = useState('');
+    const [profilePicture, setProfilePicture] = useState('');
     const navigate = useNavigate();
+    
 
     const saveCartToLocalStorage = (cartData) => {
         localStorage.setItem('cartItems', JSON.stringify(cartData));
@@ -145,11 +147,22 @@ const ShopContextProvider = (props) => {
             getUserCart(localStorage.getItem('token'));
         }
     }, []);
+    useEffect(() => {
+        if (!token && localStorage.getItem('token')) {
+            setToken(localStorage.getItem('token'));
+            const storedProfilePicture = localStorage.getItem('profilePicture'); // Load profile picture from localStorage
+            if (storedProfilePicture) {
+                setProfilePicture(storedProfilePicture); // Set profile picture in state
+            }
+        }
+    }, [token]);
 
     const value = {
         products, currency, delivery_fee,
         search, setSearch, showSearch, setShowSearch,
-        cartItems, addToCart, getCartCount, updateQuantity, getCartAmount, navigate, backendUrl, setToken, token, setCartItems
+        cartItems, addToCart, getCartCount, updateQuantity, getCartAmount, navigate, backendUrl, setToken, token, setCartItems,
+        profilePicture, setProfilePicture,
+        
     };
 
     return (
