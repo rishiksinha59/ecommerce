@@ -17,16 +17,8 @@ const Product = () => {
       if (product) {
         setProductData(product);
         setImage(product.image[0]);
-        localStorage.setItem(productId, JSON.stringify(product));
-      } else {
-        // Check local storage if product is not found in context
-        const storedProduct = localStorage.getItem(productId);
-        if (storedProduct) {
-          product = JSON.parse(storedProduct);
-          setProductData(product);
-          setImage(product.image[0]);
-        }
-      }
+        // localStorage.setItem(productId, JSON.stringify(product));
+      } 
     };
 
     fetchProductData();

@@ -31,6 +31,29 @@ const Orders = () => {
       console.log(error);
     }
   }
+
+  const itemsPerPage=8
+  const [currentPage,setCurrentPage] = useState(1)
+  const lastIndex = currentPage*itemsPerPage
+  const firstIndex = lastIndex - itemsPerPage
+  const currentItems = orderData.slice(firstIndex,lastIndex)
+  const totalPages = Math.ceil(orderData.length/itemsPerPage)
+  const pageNumbers = Array.from({length: totalPages}, (_,index)=>index+1)
+  
+  const handlePageClick=(pageNumber)=>{
+    setCurrentPage(pageNumber)
+  }
+  const handlePrevPage=()=>{
+    if(currentPage>1){
+      setCurrentPage(prev=>prev-1)
+    }
+  }
+  const handleNextPage=()=>{
+    if(currentPage<totalPages){
+      setCurrentPage(prev=>prev+1)
+    }
+  }
+
   useEffect(()=>{
     loadOrderData()
   },[token])
@@ -41,7 +64,7 @@ const Orders = () => {
       </div>
       <div>
         {
-          orderData.map((item,index)=>(  //orderdata is used here in place of products
+          currentItems.map((item,index)=>(  //orderdata is used here in place of products
             <div key={index} className='py-4 border-t border-b text-gray-700 flex flex-col md:flex-row md:items-center md:justify-between gap-4'>
               <div className='flex items-start gap-6 text-sm'>
                 <img className='w-16 sm:w-20' src={item.image[0]} alt="" />
@@ -67,6 +90,24 @@ const Orders = () => {
           ))
         }
       </div>
+       {/* Pagination controls */}
+       <div className='w-fit border mx-auto mt-7'>
+          <button onClick={handlePrevPage}
+          disabled={currentPage===1}
+          className='px-4 py-2 border mx-auto border-gray-500  disabled:opacity-50'
+          >Prev</button>
+          <button>
+            {pageNumbers.map((page)=>(
+              <button key={page} onClick={()=>handlePageClick(page)}
+               className={`px-4 py-2 border border-gray-500 ${currentPage===page ? 'bg-[green]':''}`}
+               >{page}</button>
+            ))}
+          </button>
+          <button onClick={handleNextPage}
+          disabled={currentPage===totalPages}
+          className='px-4 py-2 border border-gray-500  disabled:opacity-50'
+          >Next</button>
+        </div>
     </div>
   )
 }

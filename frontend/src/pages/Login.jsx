@@ -6,7 +6,7 @@ import { assets } from '../assets/assets';
 
 const Login = () => {
   const [currentState, setCurrentState] = useState('Login');
-  const { token, setToken, navigate, backendUrl, handleGoogle, user  } = useContext(ShopContext);
+  const { token, setToken, navigate, backendUrl, handleGoogle  } = useContext(ShopContext);
 
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -20,11 +20,7 @@ const Login = () => {
         if (response.data.success) {
           setToken(response.data.token);
           localStorage.setItem('token', response.data.token);
-          // Update profile picture if available
-          if (response.data.profilePicture) {
-            setProfilePicture(response.data.profilePicture);
-            localStorage.setItem('profilePicture', response.data.profilePicture);
-          }
+         
           navigate('/');
         } else {
           toast.error(response.data.message);
@@ -34,11 +30,8 @@ const Login = () => {
         if (response.data.success) {
           setToken(response.data.token);
           localStorage.setItem('token', response.data.token);
-          // Update profile picture if available
-          if (response.data.profilePicture) {
-            setProfilePicture(response.data.profilePicture);
-            localStorage.setItem('profilePicture', response.data.profilePicture);
-          }
+         
+         
           navigate('/');
         } else {
           toast.error(response.data.message);
@@ -56,15 +49,7 @@ const Login = () => {
     }
   }, [token]);
 
-  useEffect(() => {
-    if (!token && localStorage.getItem('token')) {
-      setToken(localStorage.getItem('token'));
-      const storedProfilePicture = localStorage.getItem('profilePicture');
-      if (storedProfilePicture) {
-        setProfilePicture(storedProfilePicture);
-      }
-    }
-  }, []);
+  
 
   return (
     <>

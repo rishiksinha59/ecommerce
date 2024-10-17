@@ -10,7 +10,6 @@ const Navbar = () => {
     localStorage.removeItem("token");
     
     setToken("");
-    setCartItems({});
   };
   const location = useLocation()
   return (

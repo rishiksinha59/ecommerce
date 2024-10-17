@@ -2,8 +2,8 @@ import { createContext, useEffect, useState } from "react";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
-// import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-// import { auth } from "../firebase/firebaseConfig";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../firebase/firebaseConfig";
 
 
 export const ShopContext = createContext();
@@ -17,9 +17,9 @@ const ShopContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
     const [products, setProducts] = useState([]);
     const [token, setToken] = useState('');
-    const [profilePicture, setProfilePicture] = useState('');
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
+    
     
     const handleGoogle = async () => {
         const provider = new GoogleAuthProvider();
@@ -124,6 +124,7 @@ const ShopContextProvider = (props) => {
         return totalAmount;
     };
 
+
     const getProductsData = async () => {
         try {
             const response = await axios.get(`${backendUrl}/api/product/list`);
@@ -152,6 +153,9 @@ const ShopContextProvider = (props) => {
         }
     };
 
+   
+    
+
     useEffect(() => {
         getProductsData();
         loadCartFromLocalStorage();
@@ -163,21 +167,20 @@ const ShopContextProvider = (props) => {
             getUserCart(localStorage.getItem('token'));
         }
     }, []);
-    useEffect(() => {
-        if (!token && localStorage.getItem('token')) {
-            setToken(localStorage.getItem('token'));
-            const storedProfilePicture = localStorage.getItem('profilePicture'); // Load profile picture from localStorage
-            if (storedProfilePicture) {
-                setProfilePicture(storedProfilePicture); // Set profile picture in state
-            }
-        }
-    }, [token]);
-
+    
+    const [discount, setDiscount] = useState({
+        coupon: "",
+        applied: false,
+      });
+      const [discountedAmount, setDiscountedAmount] = useState(getCartAmount());
+      useEffect(() => {
+        setDiscountedAmount(getCartAmount());
+    }, [cartItems]);
     const value = {
         products, currency, delivery_fee,
         search, setSearch, showSearch, setShowSearch,
         cartItems, addToCart, getCartCount, updateQuantity, getCartAmount, navigate, backendUrl, setToken, token, setCartItems,
-        profilePicture, setProfilePicture, handleGoogle, user
+        handleGoogle,user, discount, setDiscount, discountedAmount, setDiscountedAmount
         
     };
 
