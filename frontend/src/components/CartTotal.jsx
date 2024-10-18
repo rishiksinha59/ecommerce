@@ -3,7 +3,7 @@ import { ShopContext } from "../context/ShopContext";
 import Title from "./Title";
 import { toast } from "react-toastify";
 import { RiDiscountPercentFill } from "react-icons/ri";
-
+import confetti from 'canvas-confetti' 
 
 const CartTotal = () => {
   const { currency, delivery_fee, getCartAmount, discountedAmount, discount, setDiscount, setDiscountedAmount } = useContext(ShopContext);
@@ -13,12 +13,22 @@ const CartTotal = () => {
     }
   }, [getCartAmount, discount.applied, setDiscountedAmount]);
 
+  const triggerConfetti = () => {
+    // Trigger confetti effect
+    confetti({
+      particleCount: 500,
+      spread: 100,
+      origin: { y: 0.6 }
+    })
+  }
+  
   const onSubmitHandler = (event) => {
     event.preventDefault();
     if (discount.coupon === "PELICAN30" && !discount.applied) {
       const newTotal = getCartAmount()*0.7;
       setDiscountedAmount(newTotal);
       setDiscount({ ...discount, applied: true });
+      triggerConfetti() 
       toast.success(`Yay! You saved ${currency}${(getCartAmount() - newTotal).toFixed(2)}`);
     } else {
       toast.error("Invalid Coupon");

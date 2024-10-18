@@ -11,6 +11,7 @@ const Collection = () => {
   const [category,setCategory] = useState([]);
   const [subCategory,setSubCategory]=useState([]);
   const [sortType,setSortType] = useState('relevance');
+  const [loading,setLoading] =useState(true);
 
   const toggleCategory=(e)=>{
     if(category.includes(e.target.value)){
@@ -30,6 +31,7 @@ const Collection = () => {
   }
 
   const applyFilter=()=>{
+    setLoading(true)
     let productsCopy = products.slice();
     if(showSearch && search){
       productsCopy=productsCopy.filter(item => item.name.toLowerCase().includes(search.toLowerCase()))
@@ -41,6 +43,7 @@ const Collection = () => {
       productsCopy=productsCopy.filter(item=>subCategory.includes(item.subCategory));
     }
     setFilterProducts(productsCopy)
+    setLoading(false)
   }
 
 const sortProduct=()=>{
@@ -84,7 +87,9 @@ const handleNextPage=()=>{
 
 
   useEffect(()=>{
+    setLoading(true)
     setFilterProducts(products)
+    setLoading(false)
   },[])
 
   useEffect(()=>{
@@ -152,12 +157,18 @@ const handleNextPage=()=>{
               <option value="high-low">Sort by: High to Low</option>
             </select>
         </div>
+        
         {/* Map products */}
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6'>
-            {currentItems.map((item,index)=>(
-              <ProductItem key={index} id={item._id} price={item.price} name={item.name} image={item.image}/>
-            ))}
-        </div>
+        {loading ? (
+          <div className="text-center py-20">Loading...</div>
+        ) : (
+          <>
+            {/* Map products */}
+            <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6'>
+              {currentItems.map((item, index) => (
+                <ProductItem key={index} id={item._id} price={item.price} name={item.name} image={item.image} />
+              ))}
+            </div>
         {/* Pagination controls */}
         <div className='w-fit border mx-auto mt-7'>
           <button onClick={handlePrevPage}
@@ -176,6 +187,8 @@ const handleNextPage=()=>{
           className='px-4 py-2 border border-gray-500  disabled:opacity-50'
           >Next</button>
         </div>
+        </>
+)}
       </div>
     </div>
   )
