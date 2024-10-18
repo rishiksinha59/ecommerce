@@ -42,13 +42,13 @@ const Cart = () => {
       <div className="text-2xl text-center mb-4">
         <Title text1={"YOUR"} text2={"CART"} />
       </div>
-      <div className="flex flex-wrap-reverse md:flex-nowrap justify-between  w-full  gap-5  max-w-[1100px] mx-auto">
-        <div className="md:w-[50%] w-[100%] min-w-[370px]">
+      <div className="flex flex-wrap-reverse md:flex-nowrap justify-between  w-full  gap-5  max-w-[1100px] mx-auto ">
+        <div className="md:w-[50%] w-[100%]  ">
           {cartData.map((item, index) => {
             const productData = products.find((product) => product._id === item._id);
             return (
               <div key={index} className="py-4 pl-4 border mb-3 text-gray-700 flex gap-3 items-center shadow-lg">
-                <div className="flex items-start gap-6 max-w-[500px] w-[100%] ">
+                <div className="flex items-start  gap-6 max-w-[500px] w-[90%] sm:w-[100%] ">
                   <img className="w-[100px] my-auto" src={productData.image[0]} alt="" />
                   <div className="flex flex-col  max-w-[400px] w-full  py-4 ">
                     <p className="text-xs sm:text-lg font-medium">{productData.name}</p>

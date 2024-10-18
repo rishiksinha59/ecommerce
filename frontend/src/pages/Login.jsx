@@ -16,7 +16,7 @@ const Login = () => {
     e.preventDefault();
     try {
       if (currentState === 'Sign Up') {
-        const response = await axios.post(`${backendUrl}/api/user/register`, { name, email, password, profilePicture });
+        const response = await axios.post(`${backendUrl}/api/user/register`, { name, email, password });
         if (response.data.success) {
           setToken(response.data.token);
           localStorage.setItem('token', response.data.token);
@@ -74,7 +74,7 @@ const Login = () => {
       <button className='bg-[green] hover:bg-orange-500 duration-150 w-full text-white font-light px-8 py-2 mt-4'>{currentState === 'Login' ? 'Sign In' : 'Sign Up'}</button>
     </form>
 
-    <div onClick={handleGoogle} className='border flex items-center gap-5 w-[90%] sm:max-w-96 mx-auto mt-8 bg-blue-500 hover:bg-blue-400 text-white cursor-pointer'><img src={assets.google_logo} className='w-10' alt="" /> Google Sign In</div>
+    {/* <div onClick={handleGoogle} className='border flex items-center gap-5 w-[90%] sm:max-w-96 mx-auto mt-8 bg-blue-500 hover:bg-blue-400 text-white cursor-pointer'><img src={assets.google_logo} className='w-10' alt="" /> Google Sign In</div> */}
     </>
   );
 };

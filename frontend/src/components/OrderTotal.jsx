@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "./Title";
 import { toast } from "react-toastify";
@@ -6,8 +6,12 @@ import { RiDiscountPercentFill } from "react-icons/ri";
 
 
 const OrderTotal = () => {
-  const { currency, delivery_fee, getCartAmount, discountedAmount } = useContext(ShopContext);
-  
+  const { currency, delivery_fee, getCartAmount, discount, discountedAmount,setDiscountedAmount } = useContext(ShopContext);
+  useEffect(()=>{
+    if (!discount.applied) {
+      setDiscountedAmount(getCartAmount());
+    }
+  },[setDiscountedAmount,discount.applied,getCartAmount])
   return (
     <div className="w-full">
       <div className="text-2xl">
