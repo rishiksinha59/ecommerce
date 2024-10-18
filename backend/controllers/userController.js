@@ -1,6 +1,6 @@
 import validator from "validator";
 import userModel from "../models/userModel.js";
-import bcrypt from 'bcrypt'
+import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 const createToken=(id)=>{
     return jwt.sign({id},process.env.JWT_SECRET)
@@ -15,7 +15,7 @@ const loginUser = async(req,res)=>{
         if(!user){
             return res.json({success:false,message: "User does not exist"})
         }
-        const isMatch = await bcrypt.compare(password,user.password);
+        const isMatch = await bcryptjs.compare(password,user.password);
         if(isMatch){
             const token = createToken(user._id)
             res.json({ success: true, token, profilePicture: user.profilePicture });
@@ -47,8 +47,8 @@ const registerUser = async(req,res)=>{
             return res.json({success:false,message:"Please enter a strong password"})
         }
         // hashing user password
-        const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(password,salt)
+        const salt = await bcryptjs.genSalt(10)
+        const hashedPassword = await bcryptjs.hash(password,salt)
         const newUser = new userModel({
             name,
             email,
