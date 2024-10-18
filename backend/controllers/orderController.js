@@ -35,10 +35,10 @@ const placeOrder = async(req,res)=>{
     }
 }
 
-// stripe method
-const placeOrderStripe=async(req,res)=>{
+// // stripe method
+// const placeOrderStripe=async(req,res)=>{
 
-}
+// }
 
 // razorpay method
 const placeOrderRazorpay=async(req,res)=>{
@@ -128,4 +128,4 @@ const updateStatus = async(req,res)=>{
     }
 }
 
-export {placeOrder, placeOrderStripe, placeOrderRazorpay, verifyRazorpay, allOrders, userOrders, updateStatus}
+export {placeOrder,  placeOrderRazorpay, verifyRazorpay, allOrders, userOrders, updateStatus}
