@@ -1,40 +1,36 @@
-import express from 'express';
-import cors from 'cors';
-import 'dotenv/config';
-import connectDB from './config/mongodb.js';
-import connectCloudinary from './config/cloudinary.js';
-import userRouter from './routes/userRoute.js';
-import productRouter from './routes/productRoute.js';
-import cartRouter from './routes/cartRoute.js';
-import orderRouter from './routes/orderRoute.js';
+import express from 'express'
+import cors from 'cors'
+import 'dotenv/config'
+import connectDB from './config/mongodb.js'
+import connectCloudinary from './config/cloudinary.js'
+import userRouter from './routes/userRoute.js'
+import productRouter from './routes/productRoute.js'
+import cartRouter from './routes/cartRoute.js'
+import orderRouter from './routes/orderRoute.js'
 
-// App config
-const app = express();
-const port = process.env.PORT || 4000;
-connectDB();
-connectCloudinary();
 
-// CORS configuration
-const corsOptions = {
-  origin: 'https://pelican-fe.vercel.app', // Replace with your frontend's domain
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
 
-// Middlewares
-app.use(express.json());
-app.use(cors(corsOptions));
+//App config
+const app = express()
+const port = process.env.PORT || 4000
+connectDB()
+connectCloudinary()
 
-// API endpoints
-app.use('/api/user', userRouter);
-app.use('/api/product', productRouter);
-app.use('/api/cart', cartRouter);
-app.use('/api/order', orderRouter);
+// middlewares
+app.use(express.json())
+app.use(cors())
 
-app.get('/', (req, res) => {
-  res.send('API is running');
-});
+// api endpoints
+app.use('/api/user',userRouter)
+app.use('/api/product',productRouter)
+app.use('/api/cart', cartRouter)
+app.use('/api/order', orderRouter)
 
-app.listen(port, () => {
-  console.log(`Server running on PORT http://localhost:${port}`);
-});
+
+app.get('/',(req,res)=>{
+    res.send('API is running')
+})
+
+app.listen(port, ()=>{
+    console.log(`Server running on PORT http://localhost:${port}`)
+})
