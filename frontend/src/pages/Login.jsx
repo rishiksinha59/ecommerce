@@ -6,7 +6,7 @@ import { assets } from '../assets/assets';
 
 const Login = () => {
   const [currentState, setCurrentState] = useState('Login');
-  const { token, setToken, navigate, backendUrl, handleGoogle  } = useContext(ShopContext);
+  const { token, setToken, navigate, backendUrl  } = useContext(ShopContext);
 
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');

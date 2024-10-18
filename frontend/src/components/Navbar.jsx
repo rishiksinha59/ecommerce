@@ -4,7 +4,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
-  const { showSearch, setShowSearch, getCartCount, navigate, token, setToken, setCartItems, handleGoogle, user } = useContext(ShopContext);
+  const { showSearch, setShowSearch, getCartCount, navigate, token, setToken, user } = useContext(ShopContext);
   const logout = () => {
     navigate("/login");
     localStorage.removeItem("token");

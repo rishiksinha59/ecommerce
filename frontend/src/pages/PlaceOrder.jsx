@@ -10,7 +10,7 @@ import confetti from 'canvas-confetti'
 
 const PlaceOrder = () => {
   const [method,setMethod] = useState('cod')
-  const {navigate,backendUrl, token, cartItems, setCartItems, getCartAmount, delivery_fee, products, discountedAmount} = useContext(ShopContext)
+  const {navigate,backendUrl, token, cartItems, setCartItems, delivery_fee, products, discountedAmount} = useContext(ShopContext)
   const [formData,setFormData] = useState({
     firstName: '',
     lastName: '',
