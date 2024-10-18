@@ -6,6 +6,7 @@ import { ShopContext } from '../context/ShopContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import OrderTotal from '../components/OrderTotal'
+import confetti from 'canvas-confetti' 
 
 const PlaceOrder = () => {
   const [method,setMethod] = useState('cod')
@@ -42,6 +43,7 @@ const PlaceOrder = () => {
         try{
           const {data} = await axios.post(backendUrl+'/api/order/verifyRazorpay',res,{headers:{token}})
           if(data.success){
+            triggerConfetti() 
             navigate('/orders')
             setCartItems({})
           }
@@ -54,6 +56,16 @@ const PlaceOrder = () => {
     const rzp = new window.Razorpay(options)
     rzp.open()
   }
+
+  const triggerConfetti = () => {
+    // Trigger confetti effect
+    confetti({
+      particleCount: 500,
+      spread: 100,
+      origin: { y: 0.6 }
+    })
+  }
+
   const onSubmitHandler=async(event)=>{
     event.preventDefault()
     try{
@@ -80,6 +92,7 @@ const PlaceOrder = () => {
         case 'cod':
           const res = await axios.post(backendUrl+'/api/order/place', orderData, {headers:{token}})
           if(res.data.success){
+            triggerConfetti()
             setCartItems({})
             toast.success(res.data.message)
             navigate('/orders')
