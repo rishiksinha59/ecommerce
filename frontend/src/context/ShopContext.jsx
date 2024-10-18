@@ -19,9 +19,6 @@ const ShopContextProvider = (props) => {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
     
-    
-    
-    
 
     const saveCartToLocalStorage = (cartData) => {
         localStorage.setItem('cartItems', JSON.stringify(cartData));
