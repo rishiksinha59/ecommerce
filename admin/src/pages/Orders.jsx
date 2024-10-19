@@ -41,7 +41,7 @@ const Orders = ({ token }) => {
   };
 
   // Pagination control
-  const itemsPerPage = 6;
+  const itemsPerPage = 20;
   const [currentPage, setCurrentPage] = useState(1);
   const lastIndex = currentPage * itemsPerPage;
   const firstIndex = lastIndex - itemsPerPage;
